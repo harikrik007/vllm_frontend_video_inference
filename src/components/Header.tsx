@@ -8,8 +8,8 @@ export function Header() {
           <Video className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h1 className="text-lg font-semibold text-text-primary">Video Inference</h1>
-          <p className="text-xs text-text-muted">AI-powered video analysis</p>
+          <h1 className="text-lg font-semibold text-text-primary">Agentbaba Homie</h1>
+          <p className="text-xs text-text-muted">Homie 1.0</p>
         </div>
       </div>
     </header>

@@ -1,5 +1,3 @@
-export type Provider = 'vllm' | 'openai'
-
 export interface Person {
   id: string
   gender_apparent: string
@@ -66,7 +64,6 @@ export interface TimingInfo {
 export interface InferenceState {
   videoUri: string | null
   prompt: string
-  provider: Provider
   isEncoding: boolean
   encodeProgress: number
   isStreaming: boolean

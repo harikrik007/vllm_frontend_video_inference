@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react'
-import type { Provider } from './lib/types'
 import { DEFAULT_PROMPT } from './lib/providers'
 import { useVideoEncoder } from './hooks/useVideoEncoder'
 import { useInference } from './hooks/useInference'
@@ -13,8 +12,6 @@ import { TimingMetrics } from './components/TimingMetrics'
 import { ResultsPanel } from './components/ResultsPanel'
 
 function App() {
-  const [provider, setProvider] = useState<Provider>('vllm')
-  const [openaiApiKey, setOpenaiApiKey] = useState('')
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT)
   const [videoFile, setVideoFile] = useState<File | null>(null)
   const [encodeStartTime, setEncodeStartTime] = useState(0)
@@ -42,8 +39,8 @@ function App() {
 
     const videoSizeMB = videoFile.size / 1_048_576
 
-    runInference(videoUri, prompt, provider, openaiApiKey, videoSizeMB, encodingTime)
-  }, [videoUriRef, videoFile, prompt, provider, openaiApiKey, encodingTime, runInference])
+    runInference(videoUri, prompt, videoSizeMB, encodingTime)
+  }, [videoUriRef, videoFile, prompt, encodingTime, runInference])
 
   const canAnalyze =
     videoUriRef.current !== null && !isEncoding && !isStreaming
@@ -54,12 +51,7 @@ function App() {
 
       <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <ProviderToggle
-            provider={provider}
-            onChange={setProvider}
-            openaiApiKey={openaiApiKey}
-            onOpenaiApiKeyChange={setOpenaiApiKey}
-          />
+          <ProviderToggle />
         </div>
 
         <VideoUploader

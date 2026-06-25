@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react'
-import type { AnalysisResult, TimingInfo, Provider } from '../lib/types'
+import type { AnalysisResult, TimingInfo } from '../lib/types'
 import { SYSTEM_PROMPT } from '../lib/system-prompt'
-import { VLLM_MODEL, OPENAI_MODEL } from '../lib/providers'
+import { VLLM_MODEL } from '../lib/providers'
 
 function extractJson(text: string): string {
   const cleaned = text.trim()
@@ -23,8 +23,6 @@ export function useInference() {
   const runInference = useCallback(async (
     videoUri: string,
     prompt: string,
-    provider: Provider,
-    openaiApiKey: string,
     videoSizeMB: number,
     encodingTime: number,
   ) => {
@@ -40,19 +38,9 @@ export function useInference() {
     const requestStartTime = performance.now()
 
     try {
-      let baseUrl: string
-      let apiKey: string
-      let model: string
-
-      if (provider === 'vllm') {
-        baseUrl = '/api/vllm'
-        apiKey = 'none'
-        model = VLLM_MODEL
-      } else {
-        baseUrl = 'https://api.openai.com/v1'
-        apiKey = openaiApiKey
-        model = OPENAI_MODEL
-      }
+      const baseUrl = '/api/vllm'
+      const apiKey = 'none'
+      const model = VLLM_MODEL
 
       const messages = [
         { role: 'system', content: SYSTEM_PROMPT },
@@ -85,13 +73,11 @@ export function useInference() {
         presence_penalty: 1.5,
       }
 
-      if (provider === 'vllm') {
-        fetchBody.top_k = 20
-        fetchBody.repetition_penalty = 1.0
-        fetchBody.mm_processor_kwargs = {
-          fps: 2.0,
-          do_sample_frames: true,
-        }
+      fetchBody.top_k = 20
+      fetchBody.repetition_penalty = 1.0
+      fetchBody.mm_processor_kwargs = {
+        fps: 2.0,
+        do_sample_frames: true,
       }
 
       const response = await fetch(`${baseUrl}/chat/completions`, {
