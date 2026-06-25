@@ -77,7 +77,7 @@ export function useInference() {
       fetchBody.repetition_penalty = 1.0
       fetchBody.mm_processor_kwargs = {
         fps: 2.0,
-        do_sample_frames: true,
+        //do_sample_frames: true,
       }
 
       const response = await fetch(`${baseUrl}/chat/completions`, {
