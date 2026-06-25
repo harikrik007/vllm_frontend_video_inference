@@ -66,7 +66,7 @@ export function useInference() {
       const fetchBody: Record<string, unknown> = {
         model,
         messages,
-        max_tokens: 8192,
+        max_tokens: 16384,
         stream: true,
         temperature: 0.2,
         top_p: 0.8,
