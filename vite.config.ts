@@ -10,7 +10,7 @@ export default defineConfig({
     proxy: {
       '/api/vllm': {
         //target: 'http://185.216.21.74:8000',
-        target: 'http://local:8000',
+        target: 'http://localhost:8000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/vllm/, '/v1'),
       },
