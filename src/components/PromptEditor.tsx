@@ -18,7 +18,7 @@ export function PromptEditor({ prompt, onChange, disabled }: PromptEditorProps) 
         className="w-full px-3 py-2 text-sm rounded-lg border border-border bg-surface text-text-primary
                    placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent/30
                    resize-none disabled:opacity-50"
-        placeholder="Describe the video in detail."
+        placeholder="Describe the video in fine grained detail."
       />
       <span className="text-xs text-text-muted mt-1 block text-right">
         {prompt.length} chars
